@@ -6,47 +6,69 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of TVSrecovery is to …
+O pacote **TVSrecovery** foi desenvolvido para identificar, extrair e
+visualizar **TVSs (Telomeric Variant Sequences)** em reads ou sequências
+genômicas. Ele combina funções para:
+
+- Buscar repetições teloméricas canônicas e variantes em arquivos FASTA.
+- Identificar TVSs entre repetições canônicas consecutivas.
+- Processar fita direta e complementar automaticamente.
+- Gerar gráficos de barras das variantes mais frequentes.
+- Gerar gráfico de pizza mostrando a proporção entre repetições
+  canônicas e variantes.
+
+O pacote facilita fluxos de trabalho envolvendo análise de telômeros e
+suas variações, especialmente em organismos que apresentam TVSs
+relevantes biologicamente.
 
 ## Installation
 
-You can install the development version of TVSrecovery from
-[GitHub](https://github.com/) with:
+Você pode instalar a versão de desenvolvimento diretamente do GitHub
+usando:
 
 ``` r
 # install.packages("pak")
 pak::pak("ArthurOliveirapassos/TVSrecovery")
 ```
 
-## Example
+## Funções Principais
 
-This is a basic example which shows you how to solve a common problem:
+### `Telomeresfinder()`
+
+Identifica sequências que contêm **N repetições canônicas consecutivas**
+(incluindo reverso, complementar e reverso-complementar) em arquivos
+FASTA.
+
+### `detect_TVS()`
+
+Extrai repetições teloméricas canônicas e identifica variantes entre
+repetições consecutivas.
+
+### `plot_TVS()`
+
+Gera dois gráficos: - **Barras**: variantes frequentes. - **Pizza**:
+proporção entre repetições canônicas e variantes.
+
+## Exemplo de Uso
 
 ``` r
 library(TVSrecovery)
-## basic example code
+
+# 1. Encontrar sequências com repetições canônicas
+hits <- Telomeresfinder(
+  fasta_file = "reads.fasta",
+  telomere_repeat = "TTAGGG",
+  min_repeats = 3
+)
+
+# 2. Detectar TVSs
+resultado <- detect_TVS(
+  arquivo_fasta = "telomere_hits.fasta",
+  repeticao_canon = "TTAGGG"
+)
+
+# 3. Plotar resultados
+graficos <- plot_TVS(resultado)
+graficos$bar_plot
+graficos$pie_plot
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.

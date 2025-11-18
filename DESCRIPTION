@@ -11,3 +11,5 @@ Description: Analise arquivos de sequenciamento para dectecção de repetições
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/ArthurOliveirapassos/TVSrecovery
+BugReports: https://github.com/ArthurOliveirapassos/TVSrecovery/issues

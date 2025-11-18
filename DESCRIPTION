@@ -1,0 +1,13 @@
+Package: TVSrecovery
+Type: Package
+Title: Prepare and analyze FASTA files to identify telomeric variants.
+Version: 0.1.0
+Author: c(
+ person("Arthur", "Passos", email = "arthur.passos@unesp.br",
+           role = c("aut", "cre"))
+Maintainer: Arthur Passos <arthur.passos@unesp.br>
+Description: Analise arquivos de sequenciamento para dectecção de repetições 
+            canônicas e variantes, plotando a proporção 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true

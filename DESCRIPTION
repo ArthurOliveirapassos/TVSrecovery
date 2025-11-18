@@ -7,7 +7,7 @@ Author: c(
            role = c("aut", "cre"))
 Maintainer: Arthur Passos <arthur.passos@unesp.br>
 Description: Analise arquivos de sequenciamento para dectecção de repetições 
-            canônicas e variantes, plotando a proporção 
+            canônicas e variantes, plotando a proporção e frequência das variantes
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

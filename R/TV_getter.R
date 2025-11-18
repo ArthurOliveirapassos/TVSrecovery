@@ -1,15 +1,5 @@
-library(Biostrings)
-library(magrittr)
-library(dplyr)
 
-#' Analisa variantes teloméricas e formata os dados para plotagem (CORRIGIDA).
-#'
-#' @param arquivo_fasta Caminho para o arquivo FASTA.
-#' @param repeticao_canon Cânone telomérico (ex: "TTAGGG").
-#' @param min_var_len Tamanho mínimo para a variante (default: 2).
-#' @param max_var_len Tamanho máximo para a variante (default: 8).
-#' @return Um data frame contendo todas as repetições (canônicas e variantes) formatadas.
-analisar_variantes_telomericas_formatada <- function(arquivo_fasta, repeticao_canon, min_var_len = 2, max_var_len = 8) {
+detect_TVS <- function(arquivo_fasta, repeticao_canon, min_var_len = 2, max_var_len = 8) {
 
   # Leitura e preparo das sequências
   sequencias_fasta <- Biostrings::readDNAStringSet(filepath = arquivo_fasta)

@@ -1,3 +1,52 @@
+#' Gerar um arquivo FASTA de exemplo com sequências teloméricas e aleatórias
+#'
+#' Esta função cria um arquivo FASTA contendo um conjunto misto de sequências:
+#' parte delas contém repetições teloméricas canônicas (com possibilidade de
+#' variantes), enquanto o restante é composto por sequências totalmente aleatórias.
+#'
+#' O objetivo é fornecer um dataset sintético útil para testes, demonstrações
+#' e exemplos no próprio pacote, como nos chunks do README ou vinhetas.
+#'
+#' @param output Nome do arquivo FASTA de saída.
+#'   Padrão: `"example_sequences.fasta"`.
+#' @param n_seqs Número total de sequências a serem geradas.
+#'   Padrão: 100.
+#' @param telomere_repeat Repetição telomérica canônica a ser utilizada.
+#'   Padrão: `"TTAGGG"`.
+#' @param min_repeats Número mínimo de repetições consecutivas por sequência.
+#' @param max_repeats Número máximo de repetições consecutivas por sequência.
+#' @param variant_prob Probabilidade de gerar uma variante dentro das repetições.
+#'
+#' @details
+#' A função cria aleatoriamente:
+#'
+#' * Entre **40 e 60 sequências teloméricas** contendo repetições canônicas
+#'   e variantes introduzidas aleatoriamente.
+#' * O restante das sequências (`n_seqs - teloméricas`) será **totalmente aleatório**.
+#'
+#' A função também adiciona flancos aleatórios em volta do bloco telomérico.
+#'
+#' Variantes são geradas substituindo uma única base dentro da repetição canônica.
+#'
+#' @return Um objeto `DNAStringSet` contendo todas as sequências geradas
+#'   (também salvas em arquivo FASTA).
+#'
+#' @examples
+#' \dontrun{
+#' # Gerar FASTA de exemplo no diretório atual
+#' example_data <- giveExampleFasta(
+#'   output = "example.fasta",
+#'   n_seqs = 50,
+#'   telomere_repeat = "TTAGGG",
+#'   variant_prob = 0.2
+#' )
+#'
+#' # Ver as primeiras sequências
+#' example_data[1:5]
+#' }
+#'
+#' @import Biostrings
+#' @export
 giveExampleFasta <- function(
     output = "example_sequences.fasta",
     n_seqs = 100,

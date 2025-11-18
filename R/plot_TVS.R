@@ -1,12 +1,37 @@
-library(ggplot2)
-library(dplyr)
-library(stats)
-library(magrittr)
-
-#' Plota a distribuição e proporção das variantes teloméricas.
+#' Plotar variantes teloméricas e proporção canônica vs variante
 #'
-#' @param variant_df O data frame resultante de analisar_variantes_telomericas_formatada.
-#' @return Uma lista contendo o gráfico de barras e o gráfico de pizza.
+#' Esta função recebe o data frame gerado por `detect_TVS()` e produz dois
+#' gráficos úteis para visualizar as repetições teloméricas:
+#'
+#' **1. Gráfico de barras** mostrando as variantes mais frequentes
+#' **2. Gráfico de pizza** mostrando a proporção entre repetições canônicas e variantes
+#'
+#' @param variant_df Um data frame gerado por `detect_TVS()`, contendo
+#'   repetições canônicas e variantes. É necessário que o objeto possua as
+#'   colunas: `seq_match`, `type` e `variant`.
+#'
+#' @return Uma lista contendo dois objetos `ggplot2`:
+#' \describe{
+#'   \item{bar_plot}{Gráfico de barras com variantes recorrentes (`n > 1`).}
+#'   \item{pie_plot}{Gráfico de pizza mostrando a proporção entre repetições do tipo canônica e variantes.}
+#' }
+#'
+#' Caso o data frame esteja vazio, a função retorna `NULL` e emite um aviso.
+#'
+#' @examples
+#' \dontrun{
+#' resultado <- detect_TVS("exemplo.fasta", repeticao_canon = "TTAGGG")
+#' graficos <- plot_TVS(resultado)
+#'
+#' # Exibir gráficos
+#' graficos$bar_plot
+#' graficos$pie_plot
+#' }
+#'
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom stats reorder
+#' @export
 plot_TVS <- function(variant_df) {
 
   if (is.null(variant_df) || nrow(variant_df) == 0) {

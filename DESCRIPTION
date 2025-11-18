@@ -13,3 +13,11 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ArthurOliveirapassos/TVSrecovery
 BugReports: https://github.com/ArthurOliveirapassos/TVSrecovery/issues
+RoxygenNote: 7.3.3
+Imports:
+  dplyr,
+  Biostrings,
+  ggplot2,
+  ShortRead,
+  stats,
+  tools

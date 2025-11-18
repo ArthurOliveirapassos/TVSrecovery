@@ -1,4 +1,4 @@
-generate_random_telomere_fasta <- function(
+giveExampleFasta <- function(
     output = "example_sequences.fasta",
     n_seqs = 100,
     telomere_repeat = "TTAGGG",

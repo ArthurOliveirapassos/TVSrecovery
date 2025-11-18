@@ -52,14 +52,42 @@ proporção entre repetições canônicas e variantes.
 ## Exemplo de Uso
 
 ``` r
+devtools::load_all(".")
+#> ℹ Loading TVSrecovery
+#> 
+#> Attaching package: 'dplyr'
+#> 
+#> 
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> 
+#> 
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 library(TVSrecovery)
 
 # 1. Encontrar sequências com repetições canônicas
-hits <- Telomeresfinder(
-  fasta_file = "reads.fasta",
+Telomeresfinder(
+  fasta_file = "example.fasta",
   telomere_repeat = "TTAGGG",
   min_repeats = 3
 )
+#> 32 sequências contendo pelo menos 1 bloco com 3 repetições consecutivas de 'TTAGGG' (ou reverso/complementar) foram salvas em: telomere_hits.fasta
+#> DNAStringSet object of length 32:
+#>      width seq                                              names               
+#>  [1]   123 CCGTGGCACTTTAGGTTCTAGAG...CACGTGAGTCAACGACCATTTC seq_2
+#>  [2]   109 ATCAAAGGCATCTGCGCGAAAAG...ACAACGAGTACATCCCGAATAA seq_3
+#>  [3]   160 TGAAACCGCGAATAAATGATAGG...GGACTACCTCTCATCTATCATT seq_4
+#>  [4]   148 GCTGTCTTCACGTAATGTCAATG...AGGTCCTGCGGCGGAGACTTAG seq_6
+#>  [5]   135 GCACTGCGTGACCCTTCTCAAGT...CTCTGATAATAGTCAAGGAATC seq_7
+#>  ...   ... ...
+#> [28]   104 GTCAGTGTTGGGTCAAGCTCCCT...CTTGCCACCCACCCGAGAAAGT seq_48
+#> [29]   131 GCTGCAAGGAACGGTTACCACAT...GCTAGGTAATCACCTATAATTT seq_49
+#> [30]   133 GTGCACAGCGGCCAGGTCCTACG...TTCGTGATGGACGGGGATGGCT seq_50
+#> [31]   128 TCACGATGATTTCGGTGTATGAG...GAAATCTACTCTTGAAGGGTCC seq_51
+#> [32]   108 AATCTCCATTCCCCTACTATTCC...GCCCCTTCGAATACGCAACAGT seq_54
 
 # 2. Detectar TVSs
 resultado <- detect_TVS(
@@ -70,5 +98,12 @@ resultado <- detect_TVS(
 # 3. Plotar resultados
 graficos <- plot_TVS(resultado)
 graficos$bar_plot
+```
+
+<img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
 graficos$pie_plot
 ```
+
+<img src="man/figures/README-example-2.png" width="100%" />

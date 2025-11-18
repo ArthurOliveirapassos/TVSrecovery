@@ -52,12 +52,14 @@ Gera dois gráficos:
 
 ## Exemplo de Uso
 
-```{r example, eval=FALSE}
+
+```{r example}
+devtools::load_all(".")
 library(TVSrecovery)
 
 # 1. Encontrar sequências com repetições canônicas
-hits <- Telomeresfinder(
-  fasta_file = "reads.fasta",
+Telomeresfinder(
+  fasta_file = "example.fasta",
   telomere_repeat = "TTAGGG",
   min_repeats = 3
 )
@@ -73,7 +75,3 @@ graficos <- plot_TVS(resultado)
 graficos$bar_plot
 graficos$pie_plot
 ```
-
-
-
-

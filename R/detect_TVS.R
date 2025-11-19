@@ -14,8 +14,8 @@
 #' The output combines both canonical repeats and variants, enabling further
 #' visualization through `plot_TVS()`.
 #'
-#' @param arquivo_fasta Path to the FASTA file containing the sequences.
-#' @param repeticao_canon Canonical repeat sequence (e.g., `"TTAGGG"`).
+#' @param fasta_file Path to the FASTA file containing the sequences.
+#' @param canonical_repeat Canonical repeat sequence (e.g., `"TTAGGG"`).
 #' @param min_var_len Minimum allowed size for a TVS (default: 2).
 #' @param max_var_len Maximum allowed size for a TVS (default: 8).
 #'
@@ -46,78 +46,77 @@
 #' @importFrom stats runif
 #'
 #' @export
-detect_TVS <- function(arquivo_fasta, repeticao_canon, min_var_len = 2, max_var_len = 8) {
+detect_TVS <- function(fasta_file, canonical_repeat, min_var_len = 2, max_var_len = 8) {
 
-  # Leitura e preparo das sequências
-  sequencias_fasta <- Biostrings::readDNAStringSet(filepath = arquivo_fasta)
-  todas_sequencias <- c(sequencias_fasta, Biostrings::reverseComplement(sequencias_fasta))
-  names(todas_sequencias) <- c(names(sequencias_fasta), paste0(names(sequencias_fasta), "_RC"))
+  # Reading and preparing sequences
+  fasta_sequences <- Biostrings::readDNAStringSet(filepath = fasta_file)
+  all_sequences <- c(fasta_sequences, Biostrings::reverseComplement(fasta_sequences))
+  names(all_sequences) <- c(names(fasta_sequences), paste0(names(fasta_sequences), "_RC"))
 
-  len_canon <- nchar(repeticao_canon)
-  todas_repeticoes <- list()
+  len_canon <- nchar(canonical_repeat)
+  all_repeats <- list()
 
-  # Itera sobre todas as sequências (originais e complementares reversas)
-  for (i in seq_along(todas_sequencias)) {
-    seq_id <- names(todas_sequencias)[i]
-    seq_dna <- todas_sequencias[[i]]
+  # Iterate over all sequences (original and reverse-complement)
+  for (i in seq_along(all_sequences)) {
+    seq_id <- names(all_sequences)[i]
+    seq_dna <- all_sequences[[i]]
     seq_string <- as.character(seq_dna)
 
-    # 1. Encontrar TODAS as ocorrências canônicas
-    ocorrencias_canonicas <- Biostrings::matchPattern(pattern = repeticao_canon, subject = seq_dna) %>%
+    # 1. Find ALL canonical occurrences
+    canonical_hits <- Biostrings::matchPattern(pattern = canonical_repeat, subject = seq_dna) %>%
       as.data.frame() %>%
       dplyr::filter(width == len_canon) %>%
-      # CORREÇÃO: Adicionar explicitamente a coluna seqnames
-      dplyr::mutate(seqnames = seq_id, type = "Canonica", seq_match = repeticao_canon)
+      # FIX: explicitly add seqnames column
+      dplyr::mutate(seqnames = seq_id, type = "Canonical", seq_match = canonical_repeat)
 
-    if (nrow(ocorrencias_canonicas) < 2) {
+    if (nrow(canonical_hits) < 2) {
       next
     }
 
-    ocorrencias_canonicas <- ocorrencias_canonicas[order(ocorrencias_canonicas$start), ]
+    canonical_hits <- canonical_hits[order(canonical_hits$start), ]
 
-    # 2. Encontrar VARIAÇÕES entre as repetições canônicas consecutivas
-    for (k in 1:(nrow(ocorrencias_canonicas) - 1)) {
-      start_prox_rep <- ocorrencias_canonicas$start[k+1]
-      end_rep_atual <- ocorrencias_canonicas$end[k]
+    # 2. Find VARIANTS between consecutive canonical repeats
+    for (k in 1:(nrow(canonical_hits) - 1)) {
+      next_rep_start <- canonical_hits$start[k + 1]
+      current_rep_end <- canonical_hits$end[k]
 
-      start_variante <- end_rep_atual + 1
-      end_variante <- start_prox_rep - 1
+      variant_start <- current_rep_end + 1
+      variant_end <- next_rep_start - 1
 
-      if (start_variante <= end_variante) {
-        variante_seq <- substr(seq_string, start = start_variante, stop = end_variante)
-        variante_len <- nchar(variante_seq)
+      if (variant_start <= variant_end) {
+        variant_seq <- substr(seq_string, start = variant_start, stop = variant_end)
+        variant_len <- nchar(variant_seq)
 
-        # O critério de variante é: tamanho correto E a sequência NÃO é a canônica
-        if (variante_len >= min_var_len && variante_len <= max_var_len && variante_seq != repeticao_canon) {
+        # Variant criterion: correct length AND sequence is NOT the canonical repeat
+        if (variant_len >= min_var_len && variant_len <= max_var_len && variant_seq != canonical_repeat) {
 
-          # Adicionar a variante encontrada
-          todas_repeticoes[[length(todas_repeticoes) + 1]] <- data.frame(
+          # Add variant found
+          all_repeats[[length(all_repeats) + 1]] <- data.frame(
             seqnames = seq_id,
-            start = start_variante,
-            end = end_variante,
-            width = variante_len,
-            type = "Variante",
-            seq_match = variante_seq
+            start = variant_start,
+            end = variant_end,
+            width = variant_len,
+            type = "Variant",
+            seq_match = variant_seq
           )
         }
       }
     }
 
-    # 3. Adicionar as repetições canônicas originais para o cálculo da proporção
-    # Agora a seleção funciona, pois a coluna seqnames foi adicionada no Passo 1
-    todas_repeticoes[[length(todas_repeticoes) + 1]] <- ocorrencias_canonicas %>%
+    # 3. Add canonical repeats for plot proportion calculations
+    all_repeats[[length(all_repeats) + 1]] <- canonical_hits %>%
       dplyr::select(seqnames, start, end, width, type, seq_match)
   }
 
-  if (length(todas_repeticoes) > 0) {
-    # Combina todas as repetições (canônicas e variantes)
-    final_df <- do.call(rbind, todas_repeticoes) %>%
-      # Cria a coluna booleana 'variant' para uso no plot_TVS
-      dplyr::mutate(variant = type == "Variante")
+  if (length(all_repeats) > 0) {
+    # Combine canonical repeats and variants
+    final_df <- do.call(rbind, all_repeats) %>%
+      # Create the logical column 'variant' (used in plot_TVS)
+      dplyr::mutate(variant = type == "Variant")
 
     return(final_df)
   } else {
-    message("Nenhuma repetição ou variante telomérica encontrada.")
+    message("No telomeric repeats or variants were found.")
     return(NULL)
   }
 }

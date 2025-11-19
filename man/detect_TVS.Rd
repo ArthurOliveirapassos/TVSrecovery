@@ -4,12 +4,12 @@
 \alias{detect_TVS}
 \title{Detect TVSs (Telomeric Variant Sequences) in FASTA sequences}
 \usage{
-detect_TVS(arquivo_fasta, repeticao_canon, min_var_len = 2, max_var_len = 8)
+detect_TVS(fasta_file, canonical_repeat, min_var_len = 2, max_var_len = 8)
 }
 \arguments{
-\item{arquivo_fasta}{Path to the FASTA file containing the sequences.}
+\item{fasta_file}{Path to the FASTA file containing the sequences.}
 
-\item{repeticao_canon}{Canonical repeat sequence (e.g., `"TTAGGG"`).}
+\item{canonical_repeat}{Canonical repeat sequence (e.g., `"TTAGGG"`).}
 
 \item{min_var_len}{Minimum allowed size for a TVS (default: 2).}
 

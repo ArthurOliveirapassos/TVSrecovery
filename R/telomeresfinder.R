@@ -1,25 +1,26 @@
-#' Identificar sequências contendo repetições teloméricas canônicas
+#' Identify sequences containing canonical telomeric repeats
 #'
-#' Esta função busca repetições teloméricas canônicas em arquivos FASTA e
-#' retorna apenas as sequências que possuem um número mínimo de repetições
-#' consecutivas. Ela também considera automaticamente as versões reversa,
-#' complementar e reverso-complementar.
+#' This function searches for canonical telomeric repeats in FASTA files
+#' and returns only the sequences that contain a minimum number of consecutive
+#' repeat units. It also automatically considers the reverse, complement,
+#' and reverse-complement versions of the repeat.
 #'
-#' @param fasta_file Caminho para o arquivo FASTA.
-#' @param telomere_repeat Sequência repetitiva telomérica canônica
-#'   (exemplo: `"TTAGGG"`).
-#' @param min_repeats Número mínimo de repetições consecutivas necessárias
-#'   para considerar a sequência como contendo telômero.
+#' @param fasta_file Path to the FASTA file.
+#' @param telomere_repeat Canonical telomeric repeat sequence
+#'   (example: `"TTAGGG"`).
+#' @param min_repeats Minimum number of consecutive repeats required
+#'   for the sequence to be considered as containing telomere repeats.
+#' @param output_fasta Optional path to the output FASTA file.
 #'
-#' @return Um objeto `DNAStringSet` contendo apenas as sequências que atendem ao critério.
+#' @return A `DNAStringSet` object containing only the sequences that meet the criteria.
 #'
 #' @examples
 #' \dontrun{
 #' hits <- Telomeresfinder("reads.fasta", telomere_repeat = "TTAGGG", min_repeats = 3)
 #' }
 #'
-#' @import Biostrings
-#' @import dplyr
+#' @importFrom Biostrings readDNAStringSet matchPattern width reverseComplement
+#' @importFrom dplyr filter
 #' @export
 Telomeresfinder <- function(fasta_file,
                             telomere_repeat = NULL,

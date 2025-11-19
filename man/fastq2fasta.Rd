@@ -2,27 +2,28 @@
 % Please edit documentation in R/fastq2fasta.R
 \name{fastq2fasta}
 \alias{fastq2fasta}
-\title{Converter arquivo FASTQ para FASTA}
+\title{Convert FASTQ file to FASTA}
 \usage{
 fastq2fasta(file, output_name = NULL)
 }
 \arguments{
-\item{file}{Caminho para o arquivo FASTQ de entrada.}
+\item{file}{Path to the input FASTQ file.}
 
-\item{output_name}{Nome do arquivo FASTA de saída.
-Se NULL ou vazio, será gerado automaticamente como `"arquivo_converted.fasta"`.}
+\item{output_name}{Name of the output FASTA file.
+If NULL or empty, it will be automatically generated as `"file_converted.fasta"`.}
 }
 \value{
-Invisivelmente retorna o nome do arquivo gerado.
+Invisibly returns the name of the generated file.
 }
 \description{
-Esta função lê um arquivo FASTQ e gera um arquivo FASTA com os mesmos IDs
-e sequências. O nome de saída pode ser definido pelo usuário ou gerado
-automaticamente a partir do nome do arquivo de entrada.
+This function reads a FASTQ file and generates a FASTA file with the same
+IDs and sequences. The output filename can be defined by the user or
+automatically generated from the input filename.
 }
 \examples{
 \dontrun{
 fastq2fasta("reads.fastq")
-fastq2fasta("reads.fastq", output_name = "dados.fasta")
+fastq2fasta("reads.fastq", output_name = "data.fasta")
 }
+
 }

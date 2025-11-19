@@ -1,22 +1,23 @@
-#' Converter arquivo FASTQ para FASTA
+#' Convert FASTQ file to FASTA
 #'
-#' Esta função lê um arquivo FASTQ e gera um arquivo FASTA com os mesmos IDs
-#' e sequências. O nome de saída pode ser definido pelo usuário ou gerado
-#' automaticamente a partir do nome do arquivo de entrada.
+#' This function reads a FASTQ file and generates a FASTA file with the same
+#' IDs and sequences. The output filename can be defined by the user or
+#' automatically generated from the input filename.
 #'
-#' @param file Caminho para o arquivo FASTQ de entrada.
-#' @param output_name Nome do arquivo FASTA de saída.
-#'   Se NULL ou vazio, será gerado automaticamente como `"arquivo_converted.fasta"`.
+#' @param file Path to the input FASTQ file.
+#' @param output_name Name of the output FASTA file.
+#'   If NULL or empty, it will be automatically generated as `"file_converted.fasta"`.
 #'
-#' @return Invisivelmente retorna o nome do arquivo gerado.
+#' @return Invisibly returns the name of the generated file.
 #'
 #' @examples
 #' \dontrun{
 #' fastq2fasta("reads.fastq")
-#' fastq2fasta("reads.fastq", output_name = "dados.fasta")
+#' fastq2fasta("reads.fastq", output_name = "data.fasta")
 #' }
-#' @import Biostrings
+#'
 #' @importFrom ShortRead readFastq sread id
+#' @importFrom Biostrings writeXStringSet
 #' @importFrom tools file_path_sans_ext
 #' @export
 fastq2fasta <- function(file, output_name = NULL) {

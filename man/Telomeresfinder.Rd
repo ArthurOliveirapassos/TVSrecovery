@@ -2,7 +2,7 @@
 % Please edit documentation in R/telomeresfinder.R
 \name{Telomeresfinder}
 \alias{Telomeresfinder}
-\title{Identificar sequências contendo repetições teloméricas canônicas}
+\title{Identify sequences containing canonical telomeric repeats}
 \usage{
 Telomeresfinder(
   fasta_file,
@@ -12,22 +12,24 @@ Telomeresfinder(
 )
 }
 \arguments{
-\item{fasta_file}{Caminho para o arquivo FASTA.}
+\item{fasta_file}{Path to the FASTA file.}
 
-\item{telomere_repeat}{Sequência repetitiva telomérica canônica
-(exemplo: `"TTAGGG"`).}
+\item{telomere_repeat}{Canonical telomeric repeat sequence
+(example: `"TTAGGG"`).}
 
-\item{min_repeats}{Número mínimo de repetições consecutivas necessárias
-para considerar a sequência como contendo telômero.}
+\item{min_repeats}{Minimum number of consecutive repeats required
+for the sequence to be considered as containing telomere repeats.}
+
+\item{output_fasta}{Optional path to the output FASTA file.}
 }
 \value{
-Um objeto `DNAStringSet` contendo apenas as sequências que atendem ao critério.
+A `DNAStringSet` object containing only the sequences that meet the criteria.
 }
 \description{
-Esta função busca repetições teloméricas canônicas em arquivos FASTA e
-retorna apenas as sequências que possuem um número mínimo de repetições
-consecutivas. Ela também considera automaticamente as versões reversa,
-complementar e reverso-complementar.
+This function searches for canonical telomeric repeats in FASTA files
+and returns only the sequences that contain a minimum number of consecutive
+repeat units. It also automatically considers the reverse, complement,
+and reverse-complement versions of the repeat.
 }
 \examples{
 \dontrun{

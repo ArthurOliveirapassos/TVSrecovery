@@ -54,19 +54,20 @@ Gera dois gráficos:
 
 
 ```{r example}
-devtools::load_all(".")
+devtools::load_all()
 library(TVSrecovery)
 
 # 1. Encontrar sequências com repetições canônicas
 Telomeresfinder(
-  fasta_file = "example.fasta",
+  fasta_file = "inst/extdata/example.fasta",
   telomere_repeat = "TTAGGG",
-  min_repeats = 3
+  min_repeats = 3,
+  output_fasta = "inst/extdata/telomere_hits.fasta"
 )
 
 # 2. Detectar TVSs
 resultado <- detect_TVS(
-  arquivo_fasta = "telomere_hits.fasta",
+  arquivo_fasta = "inst/extdata/telomere_hits.fasta",
   repeticao_canon = "TTAGGG"
 )
 

@@ -2,57 +2,56 @@
 % Please edit documentation in R/detect_TVS.R
 \name{detect_TVS}
 \alias{detect_TVS}
-\title{Detectar TVSs (Telomeric Variant Sequences) em sequências FASTA}
+\title{Detect TVSs (Telomeric Variant Sequences) in FASTA sequences}
 \usage{
 detect_TVS(arquivo_fasta, repeticao_canon, min_var_len = 2, max_var_len = 8)
 }
 \arguments{
-\item{arquivo_fasta}{Caminho para o arquivo FASTA contendo as sequências.}
+\item{arquivo_fasta}{Path to the FASTA file containing the sequences.}
 
-\item{repeticao_canon}{Sequência repetitiva canônica (ex: `"TTAGGG"`).}
+\item{repeticao_canon}{Canonical repeat sequence (e.g., `"TTAGGG"`).}
 
-\item{min_var_len}{Tamanho mínimo permitido para uma TVS (default: 2).}
+\item{min_var_len}{Minimum allowed size for a TVS (default: 2).}
 
-\item{max_var_len}{Tamanho máximo permitido para uma TVS (default: 8).}
+\item{max_var_len}{Maximum allowed size for a TVS (default: 8).}
 }
 \value{
-Um `data.frame` contendo repetições canônicas e variantes, com colunas:
+A `data.frame` containing canonical repeats and variants, with columns:
 \describe{
-  \item{seqnames}{Nome da sequência onde a repetição/TBS foi encontrada}
-  \item{start}{Posição inicial}
-  \item{end}{Posição final}
-  \item{width}{Tamanho da repetição/variante}
-  \item{type}{Tipo: `"Canonica"` ou `"Variante"`}
-  \item{seq_match}{Sequência encontrada}
-  \item{variant}{TRUE para variantes, FALSE para canônicas}
+  \item{seqnames}{Name of the sequence where the repeat/TVS was found}
+  \item{start}{Start position}
+  \item{end}{End position}
+  \item{width}{Length of the repeat/variant}
+  \item{type}{Type: `"Canonical"` or `"Variant"`}
+  \item{seq_match}{Matched sequence}
+  \item{variant}{TRUE for variants, FALSE for canonical repeats}
 }
-Caso nenhuma repetição ou TVS seja encontrada, retorna `NULL`.
+If no repeats or TVSs are found, returns `NULL`.
 }
 \description{
-A função `detect_TVS()` identifica repetições teloméricas canônicas e
-variações entre repetições consecutivas em arquivos FASTA.
-Ela processa automaticamente a fita direta e a fita reverso-complementar,
-garantindo que todas as regiões teloméricas potenciais sejam avaliadas.
+The `detect_TVS()` function identifies canonical telomeric repeats and
+sequence variations occurring between consecutive repeats in FASTA files.
+It automatically processes both the forward strand and the reverse-complement
+strand, ensuring that all potential telomeric regions are evaluated.
 }
 \details{
-O algoritmo funciona em três etapas principais:
-1. Identifica todas as ocorrências **canônicas** da repetição informada.
-2. Para cada par de repetições consecutivas, extrai a sequência intermediária.
-3. Se essa sequência tiver entre `min_var_len` e `max_var_len` bases
-   e não for idêntica à repetição canônica, é registrada como TVS (variante).
+The algorithm operates in three main steps:
+1. Identifies all **canonical** occurrences of the provided telomeric repeat.
+2. For each pair of consecutive repeats, extracts the intermediate sequence.
+3. If this sequence has between `min_var_len` and `max_var_len` bases
+   and is not identical to the canonical repeat, it is recorded as a TVS (variant).
 
-O output combina tanto repetições canônicas quanto variantes, permitindo
-posterior visualização através de `plot_TVS()`.
+The output combines both canonical repeats and variants, enabling further
+visualization through `plot_TVS()`.
 }
 \examples{
 \dontrun{
-resultado <- detect_TVS(
+result <- detect_TVS(
   arquivo_fasta = "telomere_hits.fasta",
   repeticao_canon = "TTAGGG",
   min_var_len = 2,
   max_var_len = 8
 )
 }
-
 
 }

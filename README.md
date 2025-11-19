@@ -52,29 +52,18 @@ proporção entre repetições canônicas e variantes.
 ## Exemplo de Uso
 
 ``` r
-devtools::load_all(".")
+devtools::load_all()
 #> ℹ Loading TVSrecovery
-#> 
-#> Attaching package: 'dplyr'
-#> 
-#> 
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> 
-#> 
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(TVSrecovery)
 
 # 1. Encontrar sequências com repetições canônicas
 Telomeresfinder(
-  fasta_file = "example.fasta",
+  fasta_file = "inst/extdata/example.fasta",
   telomere_repeat = "TTAGGG",
-  min_repeats = 3
+  min_repeats = 3,
+  output_fasta = "inst/extdata/telomere_hits.fasta"
 )
-#> 32 sequências contendo pelo menos 1 bloco com 3 repetições consecutivas de 'TTAGGG' (ou reverso/complementar) foram salvas em: telomere_hits.fasta
+#> 32 sequências contendo pelo menos 1 bloco com 3 repetições consecutivas de 'TTAGGG' (ou reverso/complementar) foram salvas em: inst/extdata/telomere_hits.fasta
 #> DNAStringSet object of length 32:
 #>      width seq                                              names               
 #>  [1]   123 CCGTGGCACTTTAGGTTCTAGAG...CACGTGAGTCAACGACCATTTC seq_2
@@ -91,7 +80,7 @@ Telomeresfinder(
 
 # 2. Detectar TVSs
 resultado <- detect_TVS(
-  arquivo_fasta = "telomere_hits.fasta",
+  arquivo_fasta = "inst/extdata/telomere_hits.fasta",
   repeticao_canon = "TTAGGG"
 )
 

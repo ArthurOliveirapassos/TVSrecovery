@@ -33,8 +33,8 @@ O pacote facilita fluxos de trabalho envolvendo análise de telômeros e suas va
 Você pode instalar a versão de desenvolvimento diretamente do GitHub usando:
 
 ``` r
-# install.packages("pak")
-pak::pak("ArthurOliveirapassos/TVSrecovery")
+# install.packages("devtools")
+devtools::install_github("ArthurOliveirapassos/TVSrecovery")
 ```
 
 ## Funções Principais
@@ -67,8 +67,8 @@ Telomeresfinder(
 
 # 2. Detectar TVSs
 resultado <- detect_TVS(
-  arquivo_fasta = "inst/extdata/telomere_hits.fasta",
-  repeticao_canon = "TTAGGG"
+  fasta_file = "inst/extdata/telomere_hits.fasta",
+  canonical_repeat = "TTAGGG"
 )
 
 # 3. Plotar resultados

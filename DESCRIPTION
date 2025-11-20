@@ -20,3 +20,5 @@ Imports:
   ShortRead,
   stats,
   tools
+Depends: 
+    R (>= 3.5)

@@ -27,8 +27,8 @@ Você pode instalar a versão de desenvolvimento diretamente do GitHub
 usando:
 
 ``` r
-# install.packages("pak")
-pak::pak("ArthurOliveirapassos/TVSrecovery")
+# install.packages("devtools")
+devtools::install_github("ArthurOliveirapassos/TVSrecovery")
 ```
 
 ## Funções Principais
@@ -63,7 +63,7 @@ Telomeresfinder(
   min_repeats = 3,
   output_fasta = "inst/extdata/telomere_hits.fasta"
 )
-#> 32 sequências contendo pelo menos 1 bloco com 3 repetições consecutivas de 'TTAGGG' (ou reverso/complementar) foram salvas em: inst/extdata/telomere_hits.fasta
+#> 32 sequences containing at least one block with 3 consecutive repeats of 'TTAGGG' (or reverse/complement) were saved to: inst/extdata/telomere_hits.fasta
 #> DNAStringSet object of length 32:
 #>      width seq                                              names               
 #>  [1]   123 CCGTGGCACTTTAGGTTCTAGAG...CACGTGAGTCAACGACCATTTC seq_2
@@ -80,8 +80,8 @@ Telomeresfinder(
 
 # 2. Detectar TVSs
 resultado <- detect_TVS(
-  arquivo_fasta = "inst/extdata/telomere_hits.fasta",
-  repeticao_canon = "TTAGGG"
+  fasta_file = "inst/extdata/telomere_hits.fasta",
+  canonical_repeat = "TTAGGG"
 )
 
 # 3. Plotar resultados
